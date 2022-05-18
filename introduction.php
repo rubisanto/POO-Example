@@ -1,7 +1,25 @@
 <?php
+// Création interface
+interface Travailleur
+{
+    // fonction obligatoire pour toutes les class qui implémentent l'interface
+    public function travailler();
+}
+
+// fonction abstraite
+
+abstract class Humaine
+{
+    // méthode abstraire qui n'est pas déja remplie
+    abstract public function travailler();
+}
+// Pas d'instanciation possible sur les classes abstraites
+
+
+
 // Gestion de deux employés  
 
-class Employe
+class Employe implements Travailleur
 {
     public $nom;
     public $prenom;
@@ -48,6 +66,11 @@ class Employe
     public function presentation()
     {
         var_dump("Salut, je suis $this->prenom $this->nom et j'ai $this->age ans");
+    }
+
+    public function travailler()
+    {
+        var_dump("Je suis un employé et je travaille");
     }
 }
 
@@ -98,9 +121,34 @@ class Patron extends Employe
     {
         var_dump("Je roule en $this->voiture");
     }
+
+    public function travailler()
+    {
+        return "je suis le patron et je travaille";
+    }
 }
 
 
 $patron = new Patron("joseph", "roland", 51, "mercedes");
 $patron->presentation();
 $patron->conduire();
+
+// Implémentation de l'interface Travailleur obligatoire
+function faireTravailler(Travailleur $objet)
+{
+    var_dump("Travail en cours : {$objet->travailler()}");
+}
+
+
+class Etudiant implements Travailleur
+{
+
+    // polymorphisme car différents effets de la fonction par rapport a la class 
+    public function travailler()
+    {
+        return "je suis un étudiant et je révise ";
+    }
+}
+
+
+$etudiant1 = new Etudiant();
